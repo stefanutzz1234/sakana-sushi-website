@@ -482,13 +482,14 @@
             top: 36px; left: 0; right: 0;
             z-index: 100;
             padding: 1.5rem 0;
-            transition: background 0.4s, padding 0.4s, border-bottom 0.4s;
+            transition: background 0.4s, padding 0.4s, border-bottom 0.4s, top 0.3s;
         }
         nav.scrolled {
             background: rgba(9,9,15,0.95);
             backdrop-filter: blur(12px);
             padding: 1rem 0;
             border-bottom: 1px solid var(--border);
+            top: 0;
         }
 
         .nav-inner {
@@ -2483,12 +2484,6 @@
     </div>
 </div>
 
-<!-- GLOVO FAB -->
-<button class="glovo-fab" id="glovoFab">
-    <div class="glovo-fab-pulse"></div>
-    🛵 Comandă Glovo
-</button>
-
 <!-- MAP POPUP -->
 <button class="map-btn" id="mapBtn" aria-label="Vezi locația">
     📍
@@ -2540,8 +2535,6 @@
     glovoWrap.addEventListener('click', (e) => { if (e.target === glovoWrap) { closeGlovo(); sessionStorage.setItem('glovoDismissed','1'); } });
     document.getElementById('glovoMainBtn').addEventListener('click', closeGlovo);
 
-    // FAB button
-    glovoFab.addEventListener('click', () => window.open(GLOVO_URL, '_blank'));
 
     // Hero button
     document.getElementById('heroGlovoBtn').addEventListener('click', openGlovo);
