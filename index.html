@@ -1,0 +1,2994 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakana Sushi | Sushi · Ramen · Asian Kitchen</title>
+    <meta name="description" content="Sakana Sushi — experiență japoneză autentică. Sushi premium, ramen artizanal și bucătărie asiatică. Rezervă acum.">
+    <link rel="icon" type="image/jpeg" href="brandassets/logo.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           DESIGN SYSTEM — SAKANA SUSHI
+        ============================================================ */
+        :root {
+            --navy:        #09090F;
+            --navy-2:      #0F0F1C;
+            --navy-3:      #161625;
+            --gold:        #C8A96E;
+            --gold-light:  #E2C99A;
+            --gold-dark:   #9A7A48;
+            --gold-grad:   linear-gradient(135deg, #E2C99A 0%, #C8A96E 50%, #9A7A48 100%);
+            --red:         #8C1C13;
+            --red-bright:  #B52B20;
+            --cream:       #F2EBD9;
+            --cream-muted: rgba(242,235,217,0.55);
+            --white:       #FFFFFF;
+            --border:      rgba(200,169,110,0.15);
+            --border-strong: rgba(200,169,110,0.35);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--navy);
+            color: var(--cream);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        img { max-width: 100%; display: block; }
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ============================================================
+           TYPOGRAPHY
+        ============================================================ */
+        .cinzel { font-family: 'Cinzel', serif; }
+
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+        }
+
+        .section-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .section-label::before {
+            content: '';
+            display: inline-block;
+            width: 2rem;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .gold-text {
+            background: var(--gold-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ============================================================
+           SCROLL ANIMATIONS
+        ============================================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+        .reveal-scale { opacity: 0; transform: scale(0.92); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+        .d1 { transition-delay: 0.1s !important; }
+        .d2 { transition-delay: 0.2s !important; }
+        .d3 { transition-delay: 0.3s !important; }
+        .d4 { transition-delay: 0.4s !important; }
+        .d5 { transition-delay: 0.5s !important; }
+
+        /* ============================================================
+           TOP BAR
+        ============================================================ */
+        .topbar {
+            background: var(--navy-2);
+            border-bottom: 1px solid var(--border);
+            height: 36px;
+            overflow: hidden;
+            position: relative;
+            z-index: 101;
+        }
+        .topbar-slider {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            position: relative;
+        }
+        .topbar-msg {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            color: var(--cream-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .topbar-msg.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .topbar-msg.exit {
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+        .topbar-msg strong { color: var(--gold); font-weight: 600; }
+        .topbar-msg .tb-icon { font-size: 0.9rem; }
+        .topbar-sep {
+            width: 1px;
+            height: 12px;
+            background: var(--border-strong);
+        }
+
+        /* ============================================================
+           GLOVO
+        ============================================================ */
+        /* Popup de comandă */
+        .glovo-popup-wrap {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: rgba(9,9,15,0.85);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        .glovo-popup-wrap.open { opacity: 1; pointer-events: all; }
+
+        .glovo-popup {
+            background: var(--navy-2);
+            border: 1px solid var(--border-strong);
+            max-width: 480px;
+            width: 100%;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9) translateY(24px);
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .glovo-popup-wrap.open .glovo-popup { transform: scale(1) translateY(0); }
+
+        .glovo-popup-close {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            background: none; border: none;
+            color: var(--cream-muted);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .glovo-popup-close:hover { color: var(--gold); }
+
+        .glovo-logo-wrap {
+            width: 70px; height: 70px;
+            background: #FF6B35;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+        .glovo-popup h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+        .glovo-popup p {
+            font-size: 0.85rem;
+            color: var(--cream-muted);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        .glovo-popup p strong { color: var(--gold); }
+
+        .btn-glovo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            background: #FF6B35;
+            color: #fff;
+            font-family: 'Cinzel', serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s, transform 0.3s;
+            text-decoration: none;
+        }
+        .btn-glovo:hover { background: #e55c28; transform: translateY(-2px); }
+        .btn-glovo-icon { font-size: 1.2rem; }
+
+        .glovo-popup-skip {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            color: rgba(242,235,217,0.35);
+            cursor: pointer;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+        }
+        .glovo-popup-skip:hover { color: var(--cream-muted); }
+
+        /* Buton flotant Glovo */
+        .glovo-fab {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 150;
+            background: #FF6B35;
+            color: #fff;
+            border: none;
+            height: 52px;
+            padding: 0 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(255,107,53,0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 700;
+            border-radius: 2px;
+        }
+        .glovo-fab:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(255,107,53,0.55); }
+        .glovo-fab-pulse {
+            width: 8px; height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            animation: pulse 1.8s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.7); }
+        }
+
+        /* Banner Glovo în secțiunea meniu */
+        .glovo-banner {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%);
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        .glovo-banner-text {}
+        .glovo-banner-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.05em;
+        }
+        .glovo-banner-sub {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.85);
+            margin-top: 0.2rem;
+        }
+        .glovo-banner-btn {
+            background: #fff;
+            color: #FF6B35;
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 0.75rem 1.75rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s;
+            text-decoration: none;
+            white-space: nowrap;
+            display: inline-block;
+        }
+        .glovo-banner-btn:hover { transform: scale(1.04); }
+
+        /* ============================================================
+           MAP POPUP
+        ============================================================ */
+        .map-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 150;
+            background: var(--gold-grad);
+            color: var(--navy);
+            border: none;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(200,169,110,0.35);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .map-btn:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(200,169,110,0.5); }
+        .map-btn .map-tooltip {
+            position: absolute;
+            right: 68px;
+            background: var(--navy-2);
+            border: 1px solid var(--border-strong);
+            color: var(--cream);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            padding: 0.45rem 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .map-btn:hover .map-tooltip { opacity: 1; }
+
+        .map-popup {
+            position: fixed;
+            bottom: 5.5rem;
+            right: 2rem;
+            z-index: 149;
+            width: 360px;
+            background: var(--navy-2);
+            border: 1px solid var(--border-strong);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            transform: scale(0.9) translateY(20px);
+            transform-origin: bottom right;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.35s;
+        }
+        .map-popup.open {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+        .map-popup-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .map-popup-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            color: var(--white);
+        }
+        .map-popup-sub {
+            font-size: 0.68rem;
+            color: var(--gold);
+            margin-top: 0.15rem;
+            letter-spacing: 0.05em;
+        }
+        .map-popup-close {
+            background: none;
+            border: none;
+            color: var(--cream-muted);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+        .map-popup-close:hover { color: var(--gold); }
+        .map-popup iframe {
+            display: block;
+            width: 100%;
+            height: 220px;
+            border: none;
+        }
+        .map-popup-footer {
+            padding: 0.85rem 1.25rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .map-popup-addr {
+            font-size: 0.72rem;
+            color: var(--cream-muted);
+            line-height: 1.5;
+            flex: 1;
+        }
+        .map-popup-addr strong { color: var(--cream); display: block; }
+        .map-open-link {
+            font-family: 'Cinzel', serif;
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid var(--gold-dark);
+            padding: 0.4rem 0.8rem;
+            white-space: nowrap;
+            transition: background 0.3s, color 0.3s;
+        }
+        .map-open-link:hover { background: var(--gold); color: var(--navy); }
+
+        /* ============================================================
+           NAV
+        ============================================================ */
+        nav {
+            position: fixed;
+            top: 36px; left: 0; right: 0;
+            z-index: 100;
+            padding: 1.5rem 0;
+            transition: background 0.4s, padding 0.4s, border-bottom 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(9,9,15,0.95);
+            backdrop-filter: blur(12px);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .nav-logo img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border-strong);
+        }
+        .nav-logo-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            color: var(--cream);
+        }
+        .nav-logo-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.55rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-top: 0.1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+        .nav-links a {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--cream-muted);
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        .nav-links a:hover { color: var(--gold); }
+
+        .nav-cta {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            padding: 0.65rem 1.5rem;
+            border: 1px solid var(--gold-dark);
+            color: var(--gold);
+            text-transform: uppercase;
+            transition: background 0.3s, color 0.3s;
+        }
+        .nav-cta:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .nav-burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .nav-burger span {
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: var(--cream);
+            transition: all 0.3s;
+        }
+
+        /* ============================================================
+           HERO
+        ============================================================ */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('brandassets/pozasushi2.jpg');
+            background-size: cover;
+            background-position: center 30%;
+            transform: scale(1.08);
+            transition: transform 8s ease-out;
+        }
+        .hero-bg.loaded { transform: scale(1); }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(9,9,15,0.97) 0%,
+                rgba(9,9,15,0.6) 40%,
+                rgba(9,9,15,0.2) 100%
+            );
+        }
+        .hero-overlay-left {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(9,9,15,0.7) 0%, transparent 60%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding-bottom: 6rem;
+            max-width: 900px;
+        }
+
+        .hero-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.3s forwards;
+        }
+        .hero-label::before {
+            content: '';
+            display: block;
+            width: 3rem;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3.5rem, 9vw, 8rem);
+            font-weight: 700;
+            line-height: 0.95;
+            letter-spacing: -0.01em;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.5s forwards;
+        }
+        .hero-title em {
+            font-style: italic;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            color: var(--gold-light);
+        }
+
+        .hero-sub {
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            color: var(--cream-muted);
+            max-width: 420px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.7s forwards;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.9s forwards;
+        }
+
+        .btn-primary {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 1rem 2.5rem;
+            background: var(--gold-grad);
+            color: var(--navy);
+            font-weight: 600;
+            transition: opacity 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+        .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+
+        .btn-ghost {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 1rem 2.5rem;
+            border: 1px solid rgba(200,169,110,0.4);
+            color: var(--gold);
+            transition: border-color 0.3s, color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+        .btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); transform: translateY(-2px); }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2rem;
+            right: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 1s 1.4s forwards;
+        }
+        .hero-scroll span {
+            font-size: 0.6rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--cream-muted);
+            writing-mode: vertical-rl;
+        }
+        .hero-scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollLine 2s 2s infinite;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        @keyframes scrollLine {
+            0%   { transform: scaleY(0); transform-origin: top; }
+            50%  { transform: scaleY(1); transform-origin: top; }
+            51%  { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        /* ============================================================
+           DIVIDER
+        ============================================================ */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 0 0 4rem;
+        }
+        .divider-line { flex: 1; height: 1px; background: var(--border); }
+        .divider-icon {
+            color: var(--gold);
+            font-size: 1.2rem;
+            opacity: 0.6;
+        }
+
+        /* ============================================================
+           ABOUT
+        ============================================================ */
+        .about {
+            padding: 8rem 0;
+            background: var(--navy-2);
+            position: relative;
+            overflow: hidden;
+        }
+        .about::before {
+            content: 'SAKANA';
+            position: absolute;
+            top: 50%;
+            right: -2rem;
+            transform: translateY(-50%);
+            font-family: 'Cinzel', serif;
+            font-size: 14vw;
+            font-weight: 700;
+            color: rgba(200,169,110,0.03);
+            letter-spacing: 0.1em;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-img-wrap {
+            position: relative;
+        }
+        .about-img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            object-position: center;
+        }
+        .about-img-accent {
+            position: absolute;
+            bottom: -2rem;
+            right: -2rem;
+            width: 60%;
+            height: 200px;
+            border: 1px solid var(--border-strong);
+            z-index: -1;
+        }
+        .about-img-badge {
+            position: absolute;
+            top: 2rem;
+            left: -2rem;
+            background: var(--navy);
+            border: 1px solid var(--border-strong);
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .about-img-badge-num {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1;
+            background: var(--gold-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .about-img-badge-text {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--cream-muted);
+            margin-top: 0.3rem;
+        }
+
+        .about-text { }
+
+        .about-text h2 {
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            margin: 1.25rem 0;
+            color: var(--white);
+        }
+
+        .about-text p {
+            color: var(--cream-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.9;
+        }
+
+        .about-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: var(--gold-light);
+            line-height: 1.5;
+            border-left: 2px solid var(--gold-dark);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2.5rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .about-stat-num {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            background: var(--gold-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        .about-stat-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--cream-muted);
+            margin-top: 0.4rem;
+        }
+
+        /* ============================================================
+           MARQUEE
+        ============================================================ */
+        .marquee-wrap {
+            overflow: hidden;
+            background: var(--red);
+            padding: 1rem 0;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .marquee-track {
+            display: flex;
+            gap: 0;
+            animation: marquee 25s linear infinite;
+            width: max-content;
+        }
+        .marquee-item {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.9);
+            padding: 0 2.5rem;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+        .marquee-dot {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+        }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        /* ============================================================
+           MENU
+        ============================================================ */
+        .menu {
+            padding: 8rem 0;
+            background: var(--navy);
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        .menu-header h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--white);
+            margin: 1rem 0;
+        }
+        .menu-header p {
+            color: var(--cream-muted);
+            font-size: 0.9rem;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .menu-tab {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 1rem 2.5rem;
+            color: var(--cream-muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: color 0.3s, border-color 0.3s;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+        .menu-tab.active {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+        .menu-tab:hover { color: var(--gold-light); }
+
+        .menu-panel { display: none; }
+        .menu-panel.active { display: block; }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .menu-item {
+            background: var(--navy-2);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .menu-item:hover {
+            border-color: var(--gold-dark);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .menu-item-img-wrap {
+            position: relative;
+            overflow: hidden;
+            height: 180px;
+        }
+        .menu-item-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+        }
+        .menu-item:hover .menu-item-img { transform: scale(1.08); }
+
+        .menu-item-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(9,9,15,0.6) 0%, transparent 60%);
+        }
+
+        .menu-item-tag {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            font-size: 0.58rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--navy);
+            background: var(--gold-grad);
+            padding: 0.25rem 0.6rem;
+            font-weight: 600;
+        }
+
+        .menu-item-body {
+            padding: 1.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .menu-item-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--white);
+            letter-spacing: 0.05em;
+        }
+        .menu-item-desc {
+            font-size: 0.75rem;
+            color: var(--cream-muted);
+            line-height: 1.6;
+            flex: 1;
+        }
+        .menu-item-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+        .menu-item-price {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            background: var(--gold-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .menu-item-cta {
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--cream-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: color 0.3s;
+        }
+        .menu-item:hover .menu-item-cta { color: var(--gold); }
+
+        /* MODAL */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(9,9,15,0.92);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s;
+        }
+        .modal-backdrop.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal {
+            background: var(--navy-2);
+            border: 1px solid var(--border-strong);
+            max-width: 780px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-height: 90vh;
+            overflow: hidden;
+            transform: scale(0.93) translateY(20px);
+            transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+        }
+        .modal-backdrop.open .modal {
+            transform: scale(1) translateY(0);
+        }
+        .modal-img-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+        .modal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 360px;
+        }
+        .modal-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(9,9,15,0.3) 0%, transparent 60%);
+        }
+        .modal-body {
+            padding: 2.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(9,9,15,0.8);
+            border: 1px solid var(--border);
+            color: var(--cream-muted);
+            font-size: 1.1rem;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: color 0.3s, border-color 0.3s;
+            z-index: 1;
+        }
+        .modal-close:hover { color: var(--gold); border-color: var(--gold); }
+        .modal-tag {
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--navy);
+            background: var(--gold-grad);
+            padding: 0.25rem 0.65rem;
+            align-self: flex-start;
+            font-weight: 600;
+        }
+        .modal-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 0.04em;
+            line-height: 1.2;
+        }
+        .modal-price {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: var(--gold-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .modal-desc {
+            font-size: 0.85rem;
+            color: var(--cream-muted);
+            line-height: 1.8;
+        }
+        .modal-section-title {
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .modal-ingredients {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .modal-ingredient {
+            font-size: 0.72rem;
+            padding: 0.25rem 0.7rem;
+            border: 1px solid var(--border);
+            color: var(--cream-muted);
+            letter-spacing: 0.05em;
+        }
+        .modal-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(200,169,110,0.04);
+            border: 1px solid var(--border);
+            margin-top: 0.5rem;
+        }
+        .modal-meta-item {}
+        .modal-meta-label {
+            font-size: 0.58rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .modal-meta-val {
+            font-size: 0.8rem;
+            color: var(--cream);
+            margin-top: 0.2rem;
+        }
+        .modal-rezerva {
+            display: block;
+            text-align: center;
+            padding: 0.9rem;
+            background: var(--gold-grad);
+            color: var(--navy);
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: auto;
+            transition: opacity 0.3s;
+        }
+        .modal-rezerva:hover { opacity: 0.85; }
+
+        /* ============================================================
+           RECENZII
+        ============================================================ */
+        .recenzii {
+            padding: 8rem 0;
+            background: var(--navy-2);
+            overflow: hidden;
+        }
+
+        .recenzii-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .recenzii-header h2 {
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            color: var(--white);
+            margin: 1rem 0 0.5rem;
+        }
+
+        .recenzii-rating-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .recenzii-score {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: var(--gold-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        .recenzii-stars-wrap { display: flex; flex-direction: column; gap: 0.3rem; }
+        .recenzii-stars { color: #FFB800; font-size: 1.3rem; letter-spacing: 2px; }
+        .recenzii-count {
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--cream-muted);
+        }
+        .recenzii-google-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--border);
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            color: var(--cream-muted);
+        }
+        .recenzii-google-badge svg { width: 18px; height: 18px; }
+
+        /* Carousel track */
+        .recenzii-track-wrap {
+            overflow: hidden;
+            position: relative;
+            margin: 0 -2rem;
+            padding: 0.5rem 2rem 1rem;
+        }
+        .recenzii-track {
+            display: flex;
+            gap: 1.25rem;
+            transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+            cursor: grab;
+            user-select: none;
+        }
+        .recenzii-track:active { cursor: grabbing; }
+
+        .rev-card {
+            background: var(--navy-3);
+            border: 1px solid var(--border);
+            padding: 1.75rem;
+            min-width: 320px;
+            max-width: 320px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .rev-card:hover {
+            border-color: var(--border-strong);
+            transform: translateY(-3px);
+        }
+
+        .rev-header {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+        .rev-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--navy);
+            background: var(--gold-grad);
+            flex-shrink: 0;
+        }
+        .rev-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.82rem;
+            color: var(--white);
+            letter-spacing: 0.04em;
+        }
+        .rev-date {
+            font-size: 0.68rem;
+            color: var(--cream-muted);
+            margin-top: 0.15rem;
+        }
+
+        .rev-stars { color: #FFB800; font-size: 0.9rem; letter-spacing: 2px; }
+
+        .rev-text {
+            font-size: 0.82rem;
+            color: rgba(242,235,217,0.75);
+            line-height: 1.75;
+            flex: 1;
+        }
+
+        .rev-source {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.62rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(242,235,217,0.3);
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+        .rev-source svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+        /* Nav dots */
+        .recenzii-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+        .recenzii-btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--cream-muted);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: border-color 0.3s, color 0.3s;
+        }
+        .recenzii-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .recenzii-dots { display: flex; gap: 0.5rem; }
+        .recenzii-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--border-strong);
+            transition: background 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        .recenzii-dot.active { background: var(--gold); transform: scale(1.4); }
+
+        .menu-footer {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .menu-footer p {
+            font-size: 0.8rem;
+            color: var(--cream-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ============================================================
+           GALLERY
+        ============================================================ */
+        .gallery {
+            padding: 8rem 0;
+            background: var(--navy-2);
+        }
+
+        .gallery-header {
+            margin-bottom: 4rem;
+        }
+        .gallery-header h2 {
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            color: var(--white);
+            margin: 1rem 0 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 0.85fr 0.85fr;
+            grid-template-rows: auto auto;
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-item:first-child {
+            grid-row: span 2;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+            display: block;
+        }
+        .gallery-item:first-child .gallery-img { height: 100%; min-height: 580px; }
+        .gallery-item:not(:first-child) .gallery-img { height: 280px; }
+        .gallery-item:hover .gallery-img { transform: scale(1.06); }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(9,9,15,0.7) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-caption {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            color: var(--gold-light);
+            text-transform: uppercase;
+        }
+
+        /* ============================================================
+           EXPERIENCE
+        ============================================================ */
+        .experience {
+            padding: 8rem 0;
+            background: var(--navy-3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exp-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+        }
+
+        .exp-card {
+            background: var(--navy-3);
+            padding: 3rem 2.5rem;
+            transition: background 0.3s;
+        }
+        .exp-card:hover { background: var(--navy-2); }
+
+        .exp-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        .exp-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        .exp-card p {
+            font-size: 0.82rem;
+            color: var(--cream-muted);
+            line-height: 1.8;
+        }
+
+        /* ============================================================
+           REZERVARE
+        ============================================================ */
+        .rezervare {
+            padding: 8rem 0;
+            background: var(--navy);
+            position: relative;
+            overflow: hidden;
+        }
+        .rezervare::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(140,28,19,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .rezervare-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .rezervare-inner h2 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            color: var(--white);
+            margin: 1rem 0 1.5rem;
+        }
+        .rezervare-inner p {
+            color: var(--cream-muted);
+            font-size: 0.9rem;
+            margin-bottom: 3rem;
+            line-height: 1.9;
+        }
+
+        .rezervare-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .form-group.full { grid-column: span 2; }
+
+        .form-group label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            color: var(--cream);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            padding: 0.85rem 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            width: 100%;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus { border-color: var(--gold-dark); }
+        .form-group select option { background: var(--navy-2); }
+        .form-group textarea { resize: none; height: 100px; }
+
+        .form-submit {
+            width: 100%;
+            padding: 1.1rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: var(--gold-grad);
+            color: var(--navy);
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.3s;
+            margin-top: 0.5rem;
+        }
+        .form-submit:hover { opacity: 0.85; transform: translateY(-2px); }
+
+        .rezervare-contact {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            padding-top: 4rem;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+        .contact-item {
+            text-align: center;
+        }
+        .contact-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.4rem;
+        }
+        .contact-value {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            color: var(--white);
+            letter-spacing: 0.05em;
+        }
+
+        /* ============================================================
+           FOOTER
+        ============================================================ */
+        footer {
+            background: var(--navy-2);
+            border-top: 1px solid var(--border);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 4rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {}
+        .footer-brand .nav-logo { margin-bottom: 1.25rem; }
+        .footer-brand p {
+            font-size: 0.8rem;
+            color: var(--cream-muted);
+            line-height: 1.8;
+            max-width: 260px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.25rem;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li {
+            margin-bottom: 0.6rem;
+        }
+        .footer-col ul li a {
+            font-size: 0.8rem;
+            color: var(--cream-muted);
+            transition: color 0.3s;
+        }
+        .footer-col ul li a:hover { color: var(--gold); }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-copy {
+            font-size: 0.72rem;
+            color: rgba(242,235,217,0.3);
+            letter-spacing: 0.05em;
+        }
+        .footer-legal {
+            display: flex;
+            gap: 2rem;
+        }
+        .footer-legal a {
+            font-size: 0.72rem;
+            color: rgba(242,235,217,0.3);
+            transition: color 0.3s;
+        }
+        .footer-legal a:hover { color: var(--gold); }
+
+        /* ============================================================
+           MOBILE NAV
+        ============================================================ */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: rgba(9,9,15,0.98);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        .mobile-menu.open { opacity: 1; pointer-events: all; }
+        .mobile-menu a {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.15em;
+            color: var(--cream);
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .mobile-menu a:hover { color: var(--gold); }
+        .mobile-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--cream-muted);
+            cursor: pointer;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+        ============================================================ */
+        @media (max-width: 1024px) {
+            .about-grid { grid-template-columns: 1fr; gap: 4rem; }
+            .about-img { height: 400px; }
+            .about-img-badge { left: 1rem; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta { display: none; }
+            .nav-burger { display: flex; }
+
+            .hero-title { font-size: clamp(2.8rem, 12vw, 5rem); }
+
+            .menu-grid { grid-template-columns: repeat(2, 1fr); }
+            .modal { grid-template-columns: 1fr; max-height: 85vh; overflow-y: auto; }
+            .modal-img-wrap { max-height: 240px; }
+            .modal-img { min-height: 220px; max-height: 240px; }
+            .modal-body { padding: 1.5rem; }
+
+            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-item:first-child { grid-row: span 1; }
+            .gallery-item:first-child .gallery-img { min-height: 300px; }
+            .gallery-item:not(:first-child) .gallery-img { height: 250px; }
+
+            .exp-grid { grid-template-columns: 1fr; }
+
+            .rezervare-form { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: span 1; }
+
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+
+            .menu-tabs { overflow-x: auto; justify-content: flex-start; }
+            .menu-tab { white-space: nowrap; }
+
+            .about-stats { gap: 2rem; flex-wrap: wrap; }
+            .rezervare-contact { gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+============================================================ -->
+<!-- TOP BAR -->
+<div class="topbar" id="topbar">
+    <div class="topbar-slider" id="topbarSlider">
+        <div class="topbar-msg active"><span class="tb-icon">🐟</span><strong>Joy Fish</strong><span class="topbar-sep"></span>Pește proaspăt adus zilnic — calitate garantată</div>
+        <div class="topbar-msg"><span class="tb-icon">⭐</span>Cel mai bun sushi din București — <strong>5.0 pe Google Maps</strong></div>
+        <div class="topbar-msg"><span class="tb-icon">🎌</span>Rețete japoneze autentice, pregătite cu <strong>ingrediente premium</strong></div>
+        <div class="topbar-msg"><span class="tb-icon">🍜</span>Ramen fiert <strong>12 ore</strong> — bulion cremos, arome profunde</div>
+        <div class="topbar-msg"><span class="tb-icon">📍</span>Găsește-ne pe <strong>Strada Alunișului 4</strong>, București · Program 12–22</div>
+        <div class="topbar-msg"><span class="tb-icon">🥢</span>Take away disponibil — <strong>comandă online</strong> sau sună-ne</div>
+        <div class="topbar-msg"><span class="tb-icon">🏆</span>15+ recenzii de <strong>5 stele</strong> — clienți care revin mereu</div>
+        <div class="topbar-msg"><span class="tb-icon">🐟</span>Joy Fish <strong>fresh daily</strong><span class="topbar-sep"></span>Niciun compromis la prospețime</div>
+    </div>
+</div>
+
+<nav id="nav">
+    <div class="container">
+        <div class="nav-inner">
+            <a href="#acasa" class="nav-logo">
+                <img src="brandassets/logo.jpg" alt="Sakana Sushi Logo">
+                <div>
+                    <span class="nav-logo-text cinzel">SAKANA</span>
+                    <span class="nav-logo-sub">Sushi · Ramen · Asian Kitchen</span>
+                </div>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#despre">Despre</a></li>
+                <li><a href="#meniu">Meniu</a></li>
+                <li><a href="#galerie">Galerie</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <a href="#rezervare" class="nav-cta cinzel">Rezervă masă</a>
+
+            <button class="nav-burger" id="burger" aria-label="Meniu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose">✕</button>
+    <a href="#despre" class="mobile-link">Despre</a>
+    <a href="#meniu" class="mobile-link">Meniu</a>
+    <a href="#galerie" class="mobile-link">Galerie</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+    <a href="#rezervare" class="mobile-link" style="color:var(--gold)">Rezervă masă</a>
+</div>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="hero" id="acasa">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-overlay-left"></div>
+
+    <div class="container">
+        <div class="hero-content">
+            <p class="hero-label">Sushi · Ramen · Asian Kitchen</p>
+            <h1 class="hero-title">
+                Arta<br>
+                <em>japoneză</em><br>
+                pe farfurie
+            </h1>
+            <p class="hero-sub">
+                Pește proaspăt zilnic, ramen fiert 12 ore și roluri pregătite pe loc. Comandă acum sau vizitează-ne — te așteptăm!
+            </p>
+            <div class="hero-actions">
+                <button class="btn-primary" id="heroGlovoBtn" style="cursor:pointer;border:none;font-size:0.82rem;">
+                    🛵 Comandă pe Glovo
+                </button>
+                <a href="#meniu" class="btn-ghost">Vezi meniul</a>
+            </div>
+            <div style="margin-top:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:0.4rem;">
+                    <span style="color:#FFB800;font-size:0.85rem;">★★★★★</span>
+                    <span style="font-size:0.72rem;color:rgba(242,235,217,0.6);letter-spacing:0.05em;">5.0 Google · 15+ recenzii</span>
+                </div>
+                <span style="width:1px;height:12px;background:rgba(200,169,110,0.3);display:inline-block;"></span>
+                <span style="font-size:0.72rem;color:rgba(242,235,217,0.6);letter-spacing:0.05em;">🐟 Pește proaspăt zilnic</span>
+                <span style="width:1px;height:12px;background:rgba(200,169,110,0.3);display:inline-block;"></span>
+                <span style="font-size:0.72rem;color:rgba(242,235,217,0.6);letter-spacing:0.05em;">📍 Str. Alunișului 4, Bcr</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-scroll">
+        <span>Scroll</span>
+        <div class="hero-scroll-line"></div>
+    </div>
+</section>
+
+<!-- ============================================================
+     MARQUEE
+============================================================ -->
+<div class="marquee-wrap">
+    <div class="marquee-track" id="marqueeTrack">
+        <div class="marquee-item">Sushi Proaspăt <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Ramen Artizanal <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Asian Kitchen <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Ingrediente Premium <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Rezervări Online <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Experiență Autentică <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Sushi Proaspăt <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Ramen Artizanal <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Asian Kitchen <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Ingrediente Premium <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Rezervări Online <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Experiență Autentică <span class="marquee-dot"></span></div>
+    </div>
+</div>
+
+<!-- ============================================================
+     ABOUT
+============================================================ -->
+<section class="about" id="despre">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-img-wrap reveal-left">
+                <img src="brandassets/pozasushi.jpg" alt="Sushi Sakana" class="about-img">
+                <div class="about-img-accent"></div>
+                <div class="about-img-badge">
+                    <div class="about-img-badge-num">100%</div>
+                    <div class="about-img-badge-text">Ingrediente<br>proaspete</div>
+                </div>
+            </div>
+
+            <div class="about-text">
+                <p class="section-label reveal d1">Filosofia noastră</p>
+                <h2 class="reveal d2">Mai mult decât<br>mâncare japoneză</h2>
+                <blockquote class="about-quote reveal d3">
+                    "Fiecare rulou spune o poveste. Fiecare bol de ramen e o artă."
+                </blockquote>
+                <p class="reveal d3">
+                    La Sakana Sushi, credem că mâncarea japoneză autentică este mai mult decât o masă — este o experiență senzorială completă. Folosim ingrediente selectate cu grijă, tehnici tradiționale transmise din generație în generație și o prezentare care îmbină estetica japoneză cu gusturile moderne.
+                </p>
+                <p class="reveal d4">
+                    Fiecare preparat este gândit pentru a oferi un echilibru perfect între textură, aromă și vizual. De la nigiri-ul nostru clasic, la ramen-ul fiert ore întregi, totul este pregătit cu pasiune și precizie.
+                </p>
+                <div class="about-stats">
+                    <div class="reveal d3">
+                        <div class="about-stat-num" data-count="50+">50+</div>
+                        <div class="about-stat-label">Preparate în meniu</div>
+                    </div>
+                    <div class="reveal d4">
+                        <div class="about-stat-num" data-count="100%">100%</div>
+                        <div class="about-stat-label">Ingrediente proaspete</div>
+                    </div>
+                    <div class="reveal d5">
+                        <div class="about-stat-num" data-count="7">7</div>
+                        <div class="about-stat-label">Zile pe săptămână</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     EXPERIENCE CARDS
+============================================================ -->
+<section class="experience">
+    <div class="container">
+        <div class="exp-grid">
+            <div class="exp-card reveal d1">
+                <span class="exp-icon">🍣</span>
+                <h3>Sushi & Rolls</h3>
+                <p>Rulouri creative și nigiri clasic, pregătite cu pește proaspăt selecționat zilnic. De la California Roll la creațiile noastre speciale.</p>
+            </div>
+            <div class="exp-card reveal d2">
+                <span class="exp-icon">🍜</span>
+                <h3>Ramen Artizanal</h3>
+                <p>Bulion fiert 12 ore, tăiței artizanali și topping-uri atent alese. Tonkotsu, Miso sau Spicy — fiecare bol e o operă de artă.</p>
+            </div>
+            <div class="exp-card reveal d3">
+                <span class="exp-icon">🥢</span>
+                <h3>Asian Kitchen</h3>
+                <p>Gyoza crocantă, edamame cu sare de mare, karaage auriu — aperitive și preparate asiatice care completează perfect experiența.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     MENIU
+============================================================ -->
+<section class="menu" id="meniu">
+    <div class="container">
+        <div class="menu-header">
+            <p class="section-label reveal" style="justify-content:center;">Selecția noastră</p>
+            <h2 class="reveal d1">Meniul Sakana</h2>
+            <p class="reveal d2">Preparate cu ingrediente proaspete, zilnic. Fiecare fel este o experiență în sine.</p>
+        </div>
+
+        <div class="menu-tabs reveal">
+            <button class="menu-tab active" data-tab="sushi">Sushi & Rolls</button>
+            <button class="menu-tab" data-tab="ramen">Ramen</button>
+            <button class="menu-tab" data-tab="kitchen">Asian Kitchen</button>
+        </div>
+
+        <!-- SUSHI -->
+        <div class="menu-panel active" id="panel-sushi"><div class="menu-grid" id="grid-sushi"></div></div>
+        <!-- RAMEN -->
+        <div class="menu-panel" id="panel-ramen"><div class="menu-grid" id="grid-ramen"></div></div>
+        <!-- ASIAN KITCHEN -->
+        <div class="menu-panel" id="panel-kitchen"><div class="menu-grid" id="grid-kitchen"></div></div>
+
+        <div class="glovo-banner reveal">
+            <div class="glovo-banner-text">
+                <div class="glovo-banner-title">🛵 Comandă acum pe Glovo</div>
+                <div class="glovo-banner-sub">Livrare rapidă la ușa ta · Sushi proaspăt pregătit pe loc</div>
+            </div>
+            <a href="https://glovoapp.com/en/ro/bucharest/stores/sakana-sushi-buc" target="_blank" class="glovo-banner-btn">Comandă acum</a>
+        </div>
+
+        <div class="menu-footer reveal">
+            <p>Meniul complet este disponibil la restaurant. Prețurile includ TVA. Anunțați-ne despre alergii alimentare.</p>
+            <a href="#rezervare" class="btn-primary">Rezervă o masă</a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     GALLERY
+============================================================ -->
+<section class="gallery" id="galerie">
+    <div class="container">
+        <div class="gallery-header">
+            <p class="section-label reveal">Galerie</p>
+            <h2 class="reveal d1">Frumusețea<br>în detalii</h2>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item reveal-left">
+                <img src="brandassets/pozasushi3.jpg" alt="Sakana Sushi — Pregătire" class="gallery-img">
+                <div class="gallery-overlay">
+                    <span class="gallery-caption">Arta pregătirii</span>
+                </div>
+            </div>
+            <div class="gallery-item reveal d1">
+                <img src="brandassets/pozasushi.jpg" alt="Sakana Sushi — Rolls" class="gallery-img">
+                <div class="gallery-overlay">
+                    <span class="gallery-caption">Rolls & Nigiri</span>
+                </div>
+            </div>
+            <div class="gallery-item reveal d2">
+                <img src="brandassets/pozasushi2.jpg" alt="Sakana Sushi — Premium" class="gallery-img">
+                <div class="gallery-overlay">
+                    <span class="gallery-caption">Selecție premium</span>
+                </div>
+            </div>
+            <div class="gallery-item reveal d3" style="grid-column: 2 / span 2;">
+                <img src="brandassets/pozasushi.jpg" alt="Sakana Sushi — Atmosferă" class="gallery-img" style="height:280px;object-position:center 60%;">
+                <div class="gallery-overlay">
+                    <span class="gallery-caption">Ingrediente proaspete</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     RECENZII
+============================================================ -->
+<section class="recenzii" id="recenzii">
+    <div class="container">
+        <div class="recenzii-header reveal">
+            <p class="section-label" style="justify-content:center;">Google Maps</p>
+            <h2>Ce spun clienții noștri</h2>
+            <div class="recenzii-rating-bar">
+                <div class="recenzii-score">5.0</div>
+                <div class="recenzii-stars-wrap">
+                    <div class="recenzii-stars">★★★★★</div>
+                    <div class="recenzii-count">15+ recenzii verificate</div>
+                </div>
+                <div class="recenzii-google-badge">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    Recenzii Google
+                </div>
+            </div>
+        </div>
+
+        <div class="recenzii-track-wrap reveal d1">
+            <div class="recenzii-track" id="recenziiTrack">
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">ST</div>
+                        <div>
+                            <div class="rev-name">Stefan Tudor</div>
+                            <div class="rev-date">acum o lună</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„We were looking for sushi in the area and we're really lucky to discover this place. While waiting for our order we got some bites to go and they were absolutely delicious — fresh, well-seasoned and beautifully presented."</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">OJ</div>
+                        <div>
+                            <div class="rev-name">Ojalá</div>
+                            <div class="rev-date">acum 5 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„A fost o plăcere să venim la Sakana! Doamna ne-a primit înăuntru să nu stăm în frig și am avut o conversație super plăcută cât ne-a pregătit mâncarea. Atmosferă caldă, oameni minunați și mâncare delicioasă."</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">AI</div>
+                        <div>
+                            <div class="rev-name">Andreea-Simona Ionică</div>
+                            <div class="rev-date">acum 5 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Am fost în data de 15.11.2025 cu prietena mea cea mai bună deoarece am văzut locul întâmplător și voiam să îl încercăm. Sushi-ul a fost extraordinar de bun — proaspăt, gustos și la prețuri foarte corecte. Recomand cu toată inima!"</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">BO</div>
+                        <div>
+                            <div class="rev-name">Bianca Oana</div>
+                            <div class="rev-date">acum 6 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Recomandăm din toată inima Umami Ramen de porc — este foarte bun! 🍜 Nu trebuie ratat nici sushi-ul sau tonkatsu de pui. Super fain atât mâncarea, cât și personalul amabil. Ne întoarcem cu siguranță!"</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">RO</div>
+                        <div>
+                            <div class="rev-name">Roro</div>
+                            <div class="rev-date">acum 3 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Special Tempura 10/10 🔥 Dragon Shrimp Roll 10/10 🔥 Totul perfect — calitate, prospețime, prezentare. Unul dintre cele mai bune locuri de sushi pe care le-am găsit. Revin!"</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">DG</div>
+                        <div>
+                            <div class="rev-name">Dana Gherase</div>
+                            <div class="rev-date">acum o lună</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Am descoperit întâmplător locul acesta în dorința de a găsi un sushi bun mai aproape de casă. Am comandat fără speranțe foarte mari, dar tot ce am mâncat ne-a surprins plăcut. Calitate excelentă, personal drăguț. Recomand!"</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">AT</div>
+                        <div>
+                            <div class="rev-name">Andra Turtulea</div>
+                            <div class="rev-date">acum 5 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Am comandat mai multe tipuri de sushi și totul a fost foarte bun și proaspăt, gătit pe loc 😁 Recomand! O să ne întoarcem cu siguranță să încercăm și noodles sau alte preparate din meniu."</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">LI</div>
+                        <div>
+                            <div class="rev-name">Loredana Ivan</div>
+                            <div class="rev-date">acum 2 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Am comandat aseară pentru prima dată de la ei. Am fost super impresionată — sushi-ul a fost foarte bun, proaspăt și gustos. Personalul a fost foarte prietenos. Cu siguranță voi repeta experiența!"</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">IS</div>
+                        <div>
+                            <div class="rev-name">Isialant</div>
+                            <div class="rev-date">acum 4 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Am cumpărat la pachet împreună cu copiii mei și am mâncat acasă. Mâncarea foarte gustoasă, ambalată foarte bine, iar personalul foarte amabil. Ne-au oferit din generozitate și ceva extra — un gest frumos pe care nu îl uiți."</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">SU</div>
+                        <div>
+                            <div class="rev-name">Stefania Usca</div>
+                            <div class="rev-date">acum 7 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Sushi-ul este foarte bun, la fel și tartarul de somon. Oamenii de acolo sunt foarte prietenoși. Prețurile sunt foarte accesibile comparativ cu alte locuri. Merită din plin vizita — revin cu siguranță!"</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">AA</div>
+                        <div>
+                            <div class="rev-name">Andreea Alexandra</div>
+                            <div class="rev-date">acum 4 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Sushi foarte gustos și proaspăt, iar bonus am primit o felie de cozonac foarte bun, moale, aromat, perfect. Chiar merită încercat! 🍣✨ Un loc cu suflet și cu oameni care știu ce fac."</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">AN</div>
+                        <div>
+                            <div class="rev-name">Ana</div>
+                            <div class="rev-date">acum 6 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Am descoperit locația din întâmplare și a fost o surpriză plăcută! Meniul arată foarte bine, așa că am comandat take away și nu am regretat deloc. Sushi-ul a depășit orice așteptare. Recomand!"</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">AA</div>
+                        <div>
+                            <div class="rev-name">Anton Andreea</div>
+                            <div class="rev-date">acum 4 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Am avut o experiență deosebită la Sakana Sushi. Am rămas extrem de impresionată de calitatea și prospețimea produselor, de gustul roll-urilor de sushi — totul a fost la superlativ. Recomand cu căldură!"</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">RA</div>
+                        <div>
+                            <div class="rev-name">Raul</div>
+                            <div class="rev-date">acum 6 luni</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Un local mic cu persoane foarte primitoare. Am mâncat sushi și mi-a plăcut mult, având în vedere că nu îmi place peștele în mod normal. Asta spune totul despre calitatea preparatelor!"</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+                <div class="rev-card">
+                    <div class="rev-header">
+                        <div class="rev-avatar">MS</div>
+                        <div>
+                            <div class="rev-name">Marilena Staetu</div>
+                            <div class="rev-date">acum o lună</div>
+                        </div>
+                    </div>
+                    <div class="rev-stars">★★★★★</div>
+                    <p class="rev-text">„Delicios. Am fost la mai multe restaurante de sushi și aici a fost cel mai bun. Calitate superioară, ingrediente proaspete și personal extraordinar de drăguț. Fără discuție — locul numărul 1 pentru sushi!"</p>
+                    <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Recenzie Google verificată</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="recenzii-nav reveal">
+            <button class="recenzii-btn" id="revPrev">←</button>
+            <div class="recenzii-dots" id="revDots"></div>
+            <button class="recenzii-btn" id="revNext">→</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     REZERVARE
+============================================================ -->
+<section class="rezervare" id="rezervare">
+    <div class="container">
+        <div class="rezervare-inner">
+            <p class="section-label reveal" style="justify-content:center;">Rezervare online</p>
+            <h2 class="reveal d1">Rezervă<br><em style="font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--gold-light);">masa ta</em></h2>
+            <p class="reveal d2">Asigură-ți locul la Sakana Sushi. Confirmarea rezervării va fi trimisă pe email sau telefon în cel mult 30 de minute.</p>
+
+            <form class="rezervare-form reveal d2" id="rezForm">
+                <div class="form-group">
+                    <label for="nume">Nume complet</label>
+                    <input type="text" id="nume" placeholder="Ion Popescu" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefon">Telefon</label>
+                    <input type="tel" id="telefon" placeholder="+40 7xx xxx xxx" required>
+                </div>
+                <div class="form-group">
+                    <label for="data">Data</label>
+                    <input type="date" id="data" required>
+                </div>
+                <div class="form-group">
+                    <label for="ora">Ora</label>
+                    <select id="ora" required>
+                        <option value="">Selectează ora</option>
+                        <option>12:00</option><option>12:30</option>
+                        <option>13:00</option><option>13:30</option>
+                        <option>14:00</option><option>14:30</option>
+                        <option>18:00</option><option>18:30</option>
+                        <option>19:00</option><option>19:30</option>
+                        <option>20:00</option><option>20:30</option>
+                        <option>21:00</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="persoane">Număr de persoane</label>
+                    <select id="persoane" required>
+                        <option value="">Selectează</option>
+                        <option>1 persoană</option><option>2 persoane</option>
+                        <option>3 persoane</option><option>4 persoane</option>
+                        <option>5 persoane</option><option>6 persoane</option>
+                        <option>7+ persoane (grup)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="email@exemplu.ro">
+                </div>
+                <div class="form-group full">
+                    <label for="mentiuni">Mențiuni speciale</label>
+                    <textarea id="mentiuni" placeholder="Alergii, ocazie specială, preferințe loc..."></textarea>
+                </div>
+                <div class="form-group full">
+                    <button type="submit" class="form-submit">Trimite Rezervarea</button>
+                </div>
+            </form>
+
+            <div class="rezervare-contact reveal">
+                <div class="contact-item">
+                    <div class="contact-label">Telefon</div>
+                    <div class="contact-value">+40 7xx xxx xxx</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">contact@sakanasushi.ro</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Program</div>
+                    <div class="contact-value">12:00 — 22:00</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label">Adresă</div>
+                    <div class="contact-value">Str. Exemplu, Nr. 1</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     MODAL
+============================================================ -->
+<div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" id="modal">
+        <div class="modal-img-wrap">
+            <img src="" alt="" class="modal-img" id="modalImg">
+            <div class="modal-img-overlay"></div>
+            <button class="modal-close" id="modalClose">✕</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer id="contact">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="nav-logo">
+                    <img src="brandassets/logo.jpg" alt="Sakana Sushi">
+                    <div>
+                        <span class="nav-logo-text cinzel">SAKANA</span>
+                        <span class="nav-logo-sub">Sushi · Ramen · Asian Kitchen</span>
+                    </div>
+                </div>
+                <p>O experiență culinară japoneză autentică, pregătită cu pasiune și ingrediente premium în fiecare zi.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navigare</h4>
+                <ul>
+                    <li><a href="#acasa">Acasă</a></li>
+                    <li><a href="#despre">Despre noi</a></li>
+                    <li><a href="#meniu">Meniu</a></li>
+                    <li><a href="#galerie">Galerie</a></li>
+                    <li><a href="#rezervare">Rezervare</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Meniu</h4>
+                <ul>
+                    <li><a href="#meniu">Sushi & Rolls</a></li>
+                    <li><a href="#meniu">Ramen</a></li>
+                    <li><a href="#meniu">Asian Kitchen</a></li>
+                    <li><a href="#meniu">Deserturi</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="tel:+40700000000">+40 7xx xxx xxx</a></li>
+                    <li><a href="mailto:contact@sakanasushi.ro">contact@sakanasushi.ro</a></li>
+                    <li><a href="#">Str. Exemplu, Nr. 1</a></li>
+                    <li><a href="#">Luni–Duminică: 12–22</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2026 Sakana Sushi. Toate drepturile rezervate.</p>
+            <div class="footer-legal">
+                <a href="#">Politică de confidențialitate</a>
+                <a href="#">Termeni și condiții</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- GLOVO POPUP -->
+<div class="glovo-popup-wrap" id="glovoPopupWrap">
+    <div class="glovo-popup">
+        <button class="glovo-popup-close" id="glovoClose">✕</button>
+        <div class="glovo-logo-wrap">🛵</div>
+        <h3>Comandă Online</h3>
+        <p>
+            Sushi proaspăt, ramen cald și preparate asiatice livrate direct la tine acasă.<br>
+            <strong>Disponibil pe Glovo</strong> — comandă în câteva click-uri!
+        </p>
+        <a href="https://glovoapp.com/en/ro/bucharest/stores/sakana-sushi-buc" target="_blank" class="btn-glovo" id="glovoMainBtn">
+            <span class="btn-glovo-icon">🛵</span> Comandă pe Glovo
+        </a>
+        <button class="glovo-popup-skip" id="glovoSkip">Nu acum, mulțumesc</button>
+    </div>
+</div>
+
+<!-- GLOVO FAB -->
+<button class="glovo-fab" id="glovoFab">
+    <div class="glovo-fab-pulse"></div>
+    🛵 Comandă Glovo
+</button>
+
+<!-- MAP POPUP -->
+<button class="map-btn" id="mapBtn" aria-label="Vezi locația">
+    📍
+    <span class="map-tooltip">Găsește-ne pe hartă</span>
+</button>
+<div class="map-popup" id="mapPopup">
+    <div class="map-popup-header">
+        <div>
+            <div class="map-popup-title">Sakana Sushi</div>
+            <div class="map-popup-sub">Str. Alunișului 4 · București</div>
+        </div>
+        <button class="map-popup-close" id="mapClose">✕</button>
+    </div>
+    <iframe
+        src="https://maps.google.com/maps?q=Strada+Alunisului+4,+Bucuresti,+Romania&t=&z=17&ie=UTF8&iwloc=&output=embed"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Sakana Sushi locație">
+    </iframe>
+    <div class="map-popup-footer">
+        <div class="map-popup-addr">
+            <strong>Sakana Sushi Take Away</strong>
+            Strada Alunișului 4, 040745 București
+        </div>
+        <a href="https://maps.google.com/maps?q=Strada+Alunisului+4,+Bucuresti,+Romania" target="_blank" class="map-open-link">Deschide</a>
+    </div>
+</div>
+
+<!-- ============================================================
+     JS
+============================================================ -->
+<script>
+    // ── Glovo popup ──
+    const glovoWrap = document.getElementById('glovoPopupWrap');
+    const glovoFab  = document.getElementById('glovoFab');
+    const GLOVO_URL = 'https://glovoapp.com/en/ro/bucharest/stores/sakana-sushi-buc';
+
+    function openGlovo() { glovoWrap.classList.add('open'); }
+    function closeGlovo() { glovoWrap.classList.remove('open'); }
+
+    // auto popup după 6 secunde (o singură dată per sesiune)
+    if (!sessionStorage.getItem('glovoDismissed')) {
+        setTimeout(openGlovo, 6000);
+    }
+
+    document.getElementById('glovoClose').addEventListener('click', () => { closeGlovo(); sessionStorage.setItem('glovoDismissed','1'); });
+    document.getElementById('glovoSkip').addEventListener('click', () => { closeGlovo(); sessionStorage.setItem('glovoDismissed','1'); });
+    glovoWrap.addEventListener('click', (e) => { if (e.target === glovoWrap) { closeGlovo(); sessionStorage.setItem('glovoDismissed','1'); } });
+    document.getElementById('glovoMainBtn').addEventListener('click', closeGlovo);
+
+    // FAB button
+    glovoFab.addEventListener('click', () => window.open(GLOVO_URL, '_blank'));
+
+    // Hero button
+    document.getElementById('heroGlovoBtn').addEventListener('click', openGlovo);
+
+    // ── Top bar rotating messages ──
+    const tbMsgs = document.querySelectorAll('.topbar-msg');
+    let tbCur = 0;
+    setInterval(() => {
+        tbMsgs[tbCur].classList.remove('active');
+        tbMsgs[tbCur].classList.add('exit');
+        setTimeout(() => tbMsgs[tbCur > 0 ? tbCur - 1 : 0].classList.remove('exit'), 600);
+        tbCur = (tbCur + 1) % tbMsgs.length;
+        tbMsgs[tbCur].classList.add('active');
+        setTimeout(() => {
+            tbMsgs.forEach((m, i) => { if (i !== tbCur) { m.classList.remove('active', 'exit'); } });
+        }, 600);
+    }, 3500);
+
+    // ── Map popup ──
+    const mapBtn = document.getElementById('mapBtn');
+    const mapPopup = document.getElementById('mapPopup');
+    const mapClose = document.getElementById('mapClose');
+    mapBtn.addEventListener('click', () => mapPopup.classList.toggle('open'));
+    mapClose.addEventListener('click', () => mapPopup.classList.remove('open'));
+    document.addEventListener('click', (e) => {
+        if (!mapPopup.contains(e.target) && !mapBtn.contains(e.target)) mapPopup.classList.remove('open');
+    });
+
+    // ── Nav scroll ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+    // ── Hero parallax ──
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('load', () => heroBg.classList.add('loaded'));
+    window.addEventListener('scroll', () => heroBg.style.transform = `translateY(${window.scrollY * 0.3}px)`);
+
+    // ── Reveal on scroll ──
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── Mobile menu ──
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => mobileMenu.classList.add('open'));
+    document.getElementById('mobileClose').addEventListener('click', () => mobileMenu.classList.remove('open'));
+    document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+    // ── Form ──
+    document.getElementById('rezForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('.form-submit');
+        btn.textContent = '✓ Rezervare trimisă!';
+        btn.style.background = 'linear-gradient(135deg, #4A7C59, #2d5a3d)';
+        setTimeout(() => { btn.textContent = 'Trimite Rezervarea'; btn.style.background = ''; e.target.reset(); }, 4000);
+    });
+    const dateInput = document.getElementById('data');
+    if (dateInput) dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+
+    // ── MENU DATA ──
+    const menuData = {
+        sushi: [
+            {
+                name: 'Dragon Roll',
+                desc: 'Somon, avocado, castravete, sos teriyaki, icre tobiko portocalii',
+                price: '42 lei',
+                tag: '★ Bestseller',
+                img: 'brandassets/pozasushi.jpg',
+                ingredients: ['Somon atlantic', 'Avocado', 'Castravete', 'Orez sushi', 'Nori', 'Sos teriyaki', 'Icre tobiko'],
+                detalii: 'Ruloul nostru emblematic — somon proaspăt învelit în avocado cremos, cu o explozie de icre tobiko portocalii. Sosul teriyaki caramelizat adaugă o dulceață subtilă care echilibrează prospețimea somonului.',
+                alergeni: 'Pește, crustacee, soia, sesam, ouă',
+                gramaj: '280g',
+                bucati: '8 bucăți'
+            },
+            {
+                name: 'Spicy Tuna Roll',
+                desc: 'Ton roșu, mayo sriracha, castravete, susan prăjit',
+                price: '38 lei',
+                tag: '🌶 Picant',
+                img: 'brandassets/pozasushi2.jpg',
+                ingredients: ['Ton roșu', 'Mayo sriracha', 'Castravete', 'Orez sushi', 'Nori', 'Susan prăjit', 'Ceapă verde'],
+                detalii: 'Ton roșu de calitate premium, amestecat cu mayo sriracha picantă. Crunchul de susan prăjit și răcoarea castravetelui creează un contrast perfect. Ideal pentru iubitorii de mâncare picantă.',
+                alergeni: 'Pește, ouă, soia, sesam, lapte',
+                gramaj: '250g',
+                bucati: '8 bucăți'
+            },
+            {
+                name: 'California Roll',
+                desc: 'Crab real, avocado cremos, icre tobiko portocalii',
+                price: '35 lei',
+                tag: null,
+                img: 'brandassets/pozasushi3.jpg',
+                ingredients: ['Crab real', 'Avocado', 'Icre tobiko', 'Orez sushi', 'Nori', 'Mayo japoneză', 'Susan'],
+                detalii: 'Clasicul japonez-american într-o versiune autentică. Crabul real (nu surimi) combinat cu avocado cremos și icre tobiko crocante. Perfect pentru începători sau pentru cei care preferă gusturi mai delicate.',
+                alergeni: 'Crustacee, ouă, soia, sesam',
+                gramaj: '240g',
+                bucati: '8 bucăți'
+            },
+            {
+                name: 'Rainbow Roll',
+                desc: 'California roll acoperit cu somon, ton, avocado și crevete',
+                price: '52 lei',
+                tag: "★ Chef's Choice",
+                img: 'brandassets/pozasushi.jpg',
+                ingredients: ['Somon', 'Ton', 'Crevete', 'Avocado', 'Crab', 'Icre tobiko', 'Orez sushi', 'Nori'],
+                detalii: 'O capodoperă vizuală și gastronomică. California roll clasic acoperit cu felii alternante de somon, ton, avocado și crevete — un curcubeu de arome și culori. Preparatul favorit al bucătarului nostru șef.',
+                alergeni: 'Pește, crustacee, ouă, soia, sesam',
+                gramaj: '320g',
+                bucati: '8 bucăți'
+            },
+            {
+                name: 'Salmon Nigiri',
+                desc: 'Somon Atlantic proaspăt pe orez aromatizat cu oțet de orez',
+                price: '28 lei',
+                tag: null,
+                img: 'brandassets/pozasushi3.jpg',
+                ingredients: ['Somon Atlantic', 'Orez sushi', 'Oțet de orez', 'Wasabi', 'Sos de soia'],
+                detalii: 'Simplitatea în formă pură. Felii groase de somon atlantic proaspăt, plasat manual pe orez sushi caldut aromatizat cu oțet și zahăr de trestie. Servit cu wasabi și sos de soia autentic.',
+                alergeni: 'Pește, soia',
+                gramaj: '80g',
+                bucati: '2 bucăți'
+            },
+            {
+                name: 'Volcano Roll',
+                desc: 'Crevete tempura, avocado, cremă de brânză, sos spicy glazurat',
+                price: '46 lei',
+                tag: '🔥 Nou',
+                img: 'brandassets/pozasushi2.jpg',
+                ingredients: ['Crevete tempura', 'Avocado', 'Cremă de brânză', 'Sos spicy', 'Orez sushi', 'Nori', 'Tobiko roșu'],
+                detalii: 'Noul nostru preparat vedetă. Crevete crocant în aluat tempura, învelit cu avocado și cremă de brânză moale, acoperit cu un sos spicy glazurat și tobiko roșu. O explozie de texturi și arome în fiecare mușcătură.',
+                alergeni: 'Crustacee, gluten, ouă, lapte, soia, sesam',
+                gramaj: '290g',
+                bucati: '8 bucăți'
+            },
+            {
+                name: 'Sakana Special',
+                desc: 'Selecție de chef — 4 tipuri de rulouri în ediție limitată zilnică',
+                price: '89 lei',
+                tag: '★ Signature',
+                img: 'brandassets/pozasushi.jpg',
+                ingredients: ['Variabil zilnic', 'Ingrediente sezoniere', 'Selecție chef'],
+                detalii: 'Creația zilnică a bucătarului nostru șef — o selecție de 12 rulouri din 4 tipuri diferite, concepute în funcție de cele mai proaspete ingrediente disponibile în acea zi. O surpriză culinară garantată.',
+                alergeni: 'Variabil — întrebați ospătarul',
+                gramaj: '480g',
+                bucati: '12 bucăți'
+            },
+            {
+                name: 'Tuna Tataki',
+                desc: 'Ton seared, ponzu, ceapă verde, susan alb și negru',
+                price: '55 lei',
+                tag: null,
+                img: 'brandassets/pozasushi2.jpg',
+                ingredients: ['Ton roșu premium', 'Sos ponzu', 'Ceapă verde', 'Susan alb & negru', 'Ghimbir murat', 'Daikon'],
+                detalii: 'Ton roșu de calitate sashimi, prăjit rapid la foc mare (seared) pe exterior, rămânând crud și roz în interior. Servit cu sos ponzu citric, ceapă verde tocată și susan bicolor. Un preparat rafinat pentru cunoscători.',
+                alergeni: 'Pește, soia, sesam, grâu',
+                gramaj: '180g',
+                bucati: 'Porție'
+            }
+        ],
+        ramen: [
+            {
+                name: 'Tonkotsu Ramen',
+                desc: 'Bulion de porc fiert 12h, chashu pork, ou marinat, nori, negi',
+                price: '55 lei',
+                tag: '★ Bestseller',
+                img: 'brandassets/pozasushi2.jpg',
+                ingredients: ['Bulion tonkotsu (12h)', 'Chashu pork', 'Ou marinat (ajitsuke tamago)', 'Nori', 'Negi', 'Tăiței ramen', 'Menkui', 'Funghi'],
+                detalii: 'Sufletul meniului nostru. Bulionul de oase de porc fiert 12 ore devine cremos și bogat în colagen. Chashu pork gătit sous-vide 6 ore, ou marinat 24h în sos de soia și mirin. Un bol complet, hrănitor și profund satisfăcător.',
+                alergeni: 'Grâu, ouă, soia, porc',
+                gramaj: '650ml + topping',
+                bucati: '1 bol'
+            },
+            {
+                name: 'Miso Ramen',
+                desc: 'Pastă miso roșie, tofu satinat, ciuperci shiitake, porumb, unt',
+                price: '50 lei',
+                tag: null,
+                img: 'brandassets/pozasushi3.jpg',
+                ingredients: ['Pastă miso roșie', 'Tofu satinat', 'Shiitake proaspăt', 'Porumb dulce', 'Unt', 'Tăiței groși', 'Ceapă verde', 'Nori'],
+                detalii: 'Bulion bogat din pastă miso roșie fermentată, cu adâncime de aromă complexă. Toful satinat absoarbe perfect gustul bulionului, iar shiitake-ul adaugă umami natural. Untul de finisaj creează o textură mătăsoasă irezistibilă.',
+                alergeni: 'Grâu, soia, lapte',
+                gramaj: '630ml + topping',
+                bucati: '1 bol'
+            },
+            {
+                name: 'Spicy Tantanmen',
+                desc: 'Unt de arahide, carne tocată picantă, spanac, ou marinat',
+                price: '52 lei',
+                tag: '🌶 Picant',
+                img: 'brandassets/pozasushi.jpg',
+                ingredients: ['Unt de arahide', 'Carne tocată de porc picantă', 'Spanac', 'Ou marinat', 'Tăiței subțiri', 'Ulei de chili', 'Susan măcinat'],
+                detalii: 'Inspirat din ramenul Sichuan — un bulion cremos de arahide cu căldura persistentă a uleiurilor de chili. Carnea tocată picantă se amestecă în bol la masă pentru un gust personalizat. Nu pentru cei cu inimă slabă.',
+                alergeni: 'Grâu, arahide, ouă, soia, sesam, porc',
+                gramaj: '620ml + topping',
+                bucati: '1 bol'
+            },
+            {
+                name: 'Shoyu Ramen',
+                desc: 'Bulion de pui cu sos de soia, tăiței subțiri, chashu pui, menma',
+                price: '48 lei',
+                tag: null,
+                img: 'brandassets/pozasushi2.jpg',
+                ingredients: ['Bulion de pui clar', 'Sos de soia artizanal', 'Chashu pui', 'Menma (bamboo murat)', 'Tăiței subțiri', 'Negi', 'Nori'],
+                detalii: 'Cel mai clasic ramen japonez — bulion auriu de pui aromatizat cu sos de soia artizanal (shoyu). Clar și ușor, dar plin de umami. Menma (lăstari de bambus murați) adaugă un crunch caracteristic. Ideal pentru o masă de prânz.',
+                alergeni: 'Grâu, soia, pui',
+                gramaj: '600ml + topping',
+                bucati: '1 bol'
+            },
+            {
+                name: 'Vegetarian Ramen',
+                desc: 'Bulion de legume, tofu crispy, shiitake, morcov, edamame, nori',
+                price: '45 lei',
+                tag: '🌱 Vegan',
+                img: 'brandassets/pozasushi3.jpg',
+                ingredients: ['Bulion de legume', 'Kombu (alge dashi)', 'Tofu crispy', 'Shiitake', 'Morcov julienne', 'Edamame', 'Nori', 'Tăiței de orez'],
+                detalii: 'Un ramen 100% vegan fără compromisuri la gust. Bulionul din kombu și ciuperci shiitake uscate oferă un umami natural profund. Tofuul crispy la exterior și moale interior este protagonistul bolului. Tăițeii sunt din orez — fără gluten.',
+                alergeni: 'Soia, sesam',
+                gramaj: '610ml + topping',
+                bucati: '1 bol'
+            },
+            {
+                name: 'Sakana Ramen',
+                desc: 'Rețeta casei — bulion dublu, chashu pork & pui, ou, nori, bamboo',
+                price: '62 lei',
+                tag: '★ Signature',
+                img: 'brandassets/pozasushi.jpg',
+                ingredients: ['Bulion dublu (porc + pui)', 'Chashu pork', 'Chashu pui', 'Ou marinat dublu', 'Nori premium', 'Bamboo', 'Unt de trufe', 'Tăiței artizanali'],
+                detalii: 'Ramenul suprem al casei Sakana. Bulion dublu — tonkotsu + shoyu combinate, fiert 18 ore. Două tipuri de chashu (porc și pui), ou marinat de 36h, nori premium și un strop de unt de trufe la finisaj. Cel mai complex preparat din meniu.',
+                alergeni: 'Grâu, ouă, soia, porc, lapte',
+                gramaj: '700ml + topping',
+                bucati: '1 bol'
+            }
+        ],
+        kitchen: [
+            {
+                name: 'Gyoza (6 buc)',
+                desc: 'Găluște japoneze cu porc și varză, prăjite, sos ponzu',
+                price: '32 lei',
+                tag: '★ Bestseller',
+                img: 'brandassets/pozasushi3.jpg',
+                ingredients: ['Porc tocat', 'Varză napa', 'Ghimbir proaspăt', 'Usturoi', 'Sos de soia', 'Ulei de susan', 'Foaie gyoza', 'Sos ponzu'],
+                detalii: 'Găluștele noastre gyoza sunt pregătite în stil yaki-gyoza — prăjite pe o parte până devin crocante aurii, aburite pe cealaltă parte pentru un interior suculent. Servite cu sos ponzu citric pentru dipping.',
+                alergeni: 'Grâu, soia, sesam, porc',
+                gramaj: '200g',
+                bucati: '6 bucăți'
+            },
+            {
+                name: 'Karaage',
+                desc: 'Pui marinat în sake și sos de soia, prăjit crocant, mayo yuzu',
+                price: '38 lei',
+                tag: null,
+                img: 'brandassets/pozasushi.jpg',
+                ingredients: ['Piept de pui', 'Sake', 'Sos de soia', 'Ghimbir', 'Usturoi', 'Amidon de cartofi', 'Mayo yuzu', 'Lămâie'],
+                detalii: 'Puiul japonez prăjit — mult mai bun decât varianta occidentală. Marininat 24h în sake, sos de soia și ghimbir, prăjit în amidon de cartofi pentru o crustă ultra-crocantă. Mayo de yuzu face diferența față de orice alt pui prăjit.',
+                alergeni: 'Grâu, soia, ouă, lapte',
+                gramaj: '250g',
+                bucati: 'Porție'
+            },
+            {
+                name: 'Edamame',
+                desc: 'Boabe de soia aburite cu sare de mare și ulei de susan',
+                price: '22 lei',
+                tag: '🌱 Vegan',
+                img: 'brandassets/pozasushi2.jpg',
+                ingredients: ['Boabe edamame', 'Sare de mare', 'Ulei de susan', 'Fulgi de chili (opțional)'],
+                detalii: 'Aperitivul perfect pentru a începe masa. Boabe de soia tinere, aburite la perfecție și condimentate cu sare grunjoasă de mare și un strop de ulei de susan. Simple, sănătoase și imposibil de mâncat doar câteva.',
+                alergeni: 'Soia, sesam',
+                gramaj: '200g',
+                bucati: 'Porție'
+            },
+            {
+                name: 'Takoyaki (6 buc)',
+                desc: 'Bile de aluat cu octopus, sos takoyaki, bonito, mayo japoneză',
+                price: '35 lei',
+                tag: null,
+                img: 'brandassets/pozasushi3.jpg',
+                ingredients: ['Aluat takoyaki', 'Octopus gătit', 'Sos takoyaki', 'Mayo japoneză', 'Fulgi bonito', 'Pudră aonori', 'Ceapă verde'],
+                detalii: 'Streetfood iconic din Osaka, pregătit în tava noastră specială de fontă. Bile perfecte de aluat cu interior moale și exterior ușor crocant, cu bucățele de octopus fraged în mijloc. Sosul takoyaki dulce-sărat și fulgii de bonito care „dansează" din căldura preparatului — un spectacol și pentru ochi.',
+                alergeni: 'Grâu, ouă, moluște, pește, soia',
+                gramaj: '210g',
+                bucati: '6 bucăți'
+            },
+            {
+                name: 'Tempura Mix',
+                desc: 'Crevete și legume în aluat tempura, sos tentsuyu',
+                price: '44 lei',
+                tag: null,
+                img: 'brandassets/pozasushi.jpg',
+                ingredients: ['Crevete tiger', 'Dovlecel', 'Morcov', 'Ardei roșu', 'Aluat tempura', 'Sos tentsuyu', 'Daikon ras', 'Ghimbir'],
+                detalii: 'Aluatul tempura japonez este unic — extrem de ușor și crocant, fără a fi gras. Secretul: apă rece cu gheață și făină amestecată minimal. Crevete tiger crocante și legume colorate, servite cu sos tentsuyu cald și daikon ras pentru digestie.',
+                alergeni: 'Grâu, crustacee, ouă',
+                gramaj: '280g',
+                bucati: 'Porție mixtă'
+            },
+            {
+                name: 'Mochi Ice Cream',
+                desc: 'Mochi de orez cu înghețată — mango, matcha sau căpșuni',
+                price: '28 lei',
+                tag: '🍡 Desert',
+                img: 'brandassets/pozasushi2.jpg',
+                ingredients: ['Aluat mochi (orez glutinos)', 'Înghețată premium', 'Arome naturale', 'Amidon de porumb'],
+                detalii: 'Deserturi japoneze tradiționale — bile de aluat moale de orez glutinos umplute cu înghețată premium. Trei arome disponibile: mango tropical, matcha (ceai verde) cu amăreală subtilă, și căpșuni cu parfum natural. Servite 3 bucăți per porție, câte una din fiecare aromă.',
+                alergeni: 'Lapte, poate conține urme de nuci',
+                gramaj: '150g',
+                bucati: '3 bucăți (1 din fiecare aromă)'
+            }
+        ]
+    };
+
+    // ── Render menu cards ──
+    function renderCards(key) {
+        const grid = document.getElementById('grid-' + key);
+        grid.innerHTML = menuData[key].map((item, i) => `
+            <div class="menu-item" data-key="${key}" data-idx="${i}">
+                <div class="menu-item-img-wrap">
+                    <img src="${item.img}" alt="${item.name}" class="menu-item-img" loading="lazy">
+                    <div class="menu-item-img-overlay"></div>
+                    ${item.tag ? `<span class="menu-item-tag">${item.tag}</span>` : ''}
+                </div>
+                <div class="menu-item-body">
+                    <div class="menu-item-name">${item.name}</div>
+                    <div class="menu-item-desc">${item.desc}</div>
+                    <div class="menu-item-footer">
+                        <div class="menu-item-price">${item.price}</div>
+                        <div class="menu-item-cta">Detalii →</div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        grid.querySelectorAll('.menu-item').forEach(card => {
+            card.addEventListener('click', () => {
+                const item = menuData[card.dataset.key][card.dataset.idx];
+                openModal(item);
+            });
+        });
+    }
+
+    renderCards('sushi');
+    renderCards('ramen');
+    renderCards('kitchen');
+
+    // ── Menu tabs ──
+    const tabs = document.querySelectorAll('.menu-tab');
+    const panels = document.querySelectorAll('.menu-panel');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            panels.forEach(p => p.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+        });
+    });
+
+    // ── Modal ──
+    const backdrop = document.getElementById('modalBackdrop');
+    const modalImg = document.getElementById('modalImg');
+    const modalBody = document.getElementById('modalBody');
+
+    function openModal(item) {
+        modalImg.src = item.img;
+        modalImg.alt = item.name;
+        modalBody.innerHTML = `
+            ${item.tag ? `<span class="modal-tag">${item.tag}</span>` : ''}
+            <div class="modal-name">${item.name}</div>
+            <div class="modal-price">${item.price}</div>
+            <p class="modal-desc">${item.detalii}</p>
+            <div>
+                <div class="modal-section-title">Ingrediente</div>
+                <div class="modal-ingredients">
+                    ${item.ingredients.map(ing => `<span class="modal-ingredient">${ing}</span>`).join('')}
+                </div>
+            </div>
+            <div class="modal-meta">
+                <div class="modal-meta-item">
+                    <div class="modal-meta-label">Gramaj</div>
+                    <div class="modal-meta-val">${item.gramaj}</div>
+                </div>
+                <div class="modal-meta-item">
+                    <div class="modal-meta-label">Porție</div>
+                    <div class="modal-meta-val">${item.bucati}</div>
+                </div>
+                <div class="modal-meta-item" style="grid-column:span 2">
+                    <div class="modal-meta-label">Alergeni</div>
+                    <div class="modal-meta-val">${item.alergeni}</div>
+                </div>
+            </div>
+            <a href="#rezervare" class="modal-rezerva" id="modalRezBtn">Rezervă o masă</a>
+        `;
+        backdrop.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('modalRezBtn').addEventListener('click', closeModal);
+    }
+
+    function closeModal() {
+        backdrop.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // ── Reviews Carousel ──
+    const track = document.getElementById('recenziiTrack');
+    const dotsWrap = document.getElementById('revDots');
+    if (track) {
+        const cards = track.querySelectorAll('.rev-card');
+        const cardW = 320 + 20; // width + gap
+        const visible = Math.floor(window.innerWidth / cardW) || 1;
+        const total = Math.ceil(cards.length / visible);
+        let cur = 0;
+
+        // build dots
+        for (let i = 0; i < total; i++) {
+            const d = document.createElement('div');
+            d.className = 'recenzii-dot' + (i === 0 ? ' active' : '');
+            d.addEventListener('click', () => goTo(i));
+            dotsWrap.appendChild(d);
+        }
+
+        function goTo(idx) {
+            cur = (idx + total) % total;
+            track.style.transform = `translateX(-${cur * visible * cardW}px)`;
+            dotsWrap.querySelectorAll('.recenzii-dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+        }
+
+        document.getElementById('revPrev').addEventListener('click', () => goTo(cur - 1));
+        document.getElementById('revNext').addEventListener('click', () => goTo(cur + 1));
+
+        // drag support
+        let startX = 0, dragging = false;
+        track.addEventListener('mousedown', e => { startX = e.clientX; dragging = true; });
+        track.addEventListener('mouseup', e => {
+            if (!dragging) return; dragging = false;
+            const diff = startX - e.clientX;
+            if (Math.abs(diff) > 60) goTo(diff > 0 ? cur + 1 : cur - 1);
+        });
+        track.addEventListener('mouseleave', () => dragging = false);
+
+        // auto-advance
+        setInterval(() => goTo(cur + 1), 5000);
+    }
+</script>
+
+</body>
+</html>
